@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e2119">
+<title>VIP Randevu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e2119;--panel:#14302500;--card:#173528;--line:#2c5240;--ivory:#f2ecdf;--mute:#a9b9ae;--brass:#c39a5b;--brass2:#e0bd83;--bad:#e58b7b;
+--serif:"Bodoni Moda",Georgia,serif;--sans:"Manrope",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ivory);font:400 16px/1.55 var(--sans);min-height:100vh}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass2);outline-offset:2px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header.hero{padding:64px 0 36px;border-bottom:1px solid var(--line)}
+.hero h1{font:700 clamp(2.4rem,7vw,4.6rem)/1.02 var(--serif);letter-spacing:-.01em;max-width:12em}
+.hero p{color:var(--mute);margin-top:16px;max-width:34em}
+.badge{display:inline-block;border:1px solid var(--brass);color:var(--brass2);padding:3px 14px;border-radius:99px;font-size:.85rem;margin-bottom:22px}
+main{display:grid;gap:36px;padding:36px 0 80px}
+@media(min-width:900px){main{grid-template-columns:1fr 330px;align-items:start}}
+section.step{padding:0 0 30px;margin-bottom:30px;border-bottom:1px solid var(--line)}
+section.step h2{font:500 1.5rem var(--serif);margin-bottom:16px;display:flex;gap:12px;align-items:baseline}
+section.step h2 b{color:var(--brass);font-size:1rem;font-family:var(--sans)}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.opt{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 16px;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--brass)}
+.opt[aria-pressed=true]{border-color:var(--brass2);background:#1e4333;box-shadow:inset 3px 0 0 var(--brass2)}
+.opt strong{display:block}
+.opt small{color:var(--mute);display:block}
+.opt .pr{float:right;color:var(--brass2);font-weight:700}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.day{flex:0 0 64px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 0;text-align:center;cursor:pointer}
+.day span{display:block;font-size:.8rem;color:var(--mute)}
+.day em{font:500 1.35rem var(--serif);font-style:normal}
+.day[aria-pressed=true]{background:var(--brass);color:#1a1409;border-color:var(--brass)}
+.day[aria-pressed=true] span{color:#3a2c14}
+.day:disabled{opacity:.3;cursor:not-allowed}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:8px;margin-top:16px}
+.t{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:9px 0;cursor:pointer}
+.t:hover:not(:disabled){border-color:var(--brass)}
+.t[aria-pressed=true]{background:var(--brass);color:#1a1409;border-color:var(--brass);font-weight:700}
+.t:disabled{opacity:.28;text-decoration:line-through;cursor:not-allowed}
+.hint{color:var(--mute);margin-top:12px}
+label{display:block;margin-bottom:14px;color:var(--mute);font-size:.9rem}
+input{width:100%;margin-top:5px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;color:var(--ivory)}
+input:focus{border-color:var(--brass2);outline:none}
+.sum{background:var(--card);border:1px solid var(--brass);border-radius:8px;padding:22px}
+@media(min-width:900px){.sum{position:sticky;top:20px}}
+.sum h3{font:500 1.3rem var(--serif);margin-bottom:12px}
+.sum dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px}
+.sum dt{color:var(--mute)}
+.sum dd{text-align:right}
+.total{border-top:1px solid var(--line);margin-top:14px;padding-top:14px;display:flex;justify-content:space-between;font-size:1.2rem}
+.total b{font:700 1.5rem var(--serif);color:var(--brass2)}
+.cta{margin-top:18px;width:100%;background:var(--brass);color:#1a1409;border:0;border-radius:6px;padding:14px;font-weight:700;cursor:pointer;transition:background .15s}
+.cta:hover:not(:disabled){background:var(--brass2)}
+.cta:disabled{opacity:.4;cursor:not-allowed}
+.link{background:none;border:0;color:var(--mute);text-decoration:underline;cursor:pointer;padding:4px}
+.done{background:var(--card);border:1px solid var(--brass2);border-radius:8px;padding:34px 26px;text-align:center;grid-column:1/-1;max-width:560px;margin:20px auto}
+.done h2{font:700 2rem var(--serif);margin-bottom:8px}
+.done p{color:var(--mute)}
+.done .det{margin:20px 0;font-size:1.1rem;color:var(--ivory)}
+.done a,.done button{display:inline-block;margin:6px;padding:12px 20px;border-radius:6px;text-decoration:none;font-weight:700;cursor:pointer}
+.done a{background:var(--brass);color:#1a1409;border:0}
+.done button{background:none;border:1px solid var(--line)}
+.admin{grid-column:1/-1}
+.admin h2{font:500 1.6rem var(--serif);margin-bottom:14px}
+.row{display:flex;gap:14px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin-bottom:8px;flex-wrap:wrap}
+.row small{color:var(--mute)}
+.row button{color:var(--bad);background:none;border:1px solid var(--bad);border-radius:6px;padding:6px 12px;cursor:pointer}
+footer{border-top:1px solid var(--line);padding:18px 0;text-align:center;color:var(--mute);font-size:.85rem}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== Telefon düzeni ===== */
+html{-webkit-text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+input{font-size:16px;min-height:50px}
+.opt{min-height:56px}
+.t{min-height:46px}
+.day{scroll-snap-align:start;min-height:76px}
+.days{scroll-snap-type:x proximity;margin:0 -20px;padding:0 20px 8px;-webkit-overflow-scrolling:touch}
+.mini{display:none}
+@media(max-width:899px){
+  header.hero{padding:34px 0 24px}
+  .hero p{font-size:.95rem}
+  main{padding:24px 0 170px;gap:0}
+  section.step{padding-bottom:22px;margin-bottom:22px}
+  section.step h2{font-size:1.3rem}
+  .opts{grid-template-columns:1fr}
+  .times{grid-template-columns:repeat(4,1fr);gap:8px}
+  .day{flex:0 0 58px}
+  .sum{position:fixed;left:0;right:0;bottom:0;z-index:20;border:0;border-top:1px solid var(--brass);border-radius:16px 16px 0 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#102a20;box-shadow:0 -10px 30px rgba(0,0,0,.45)}
+  .sum h3,.sum dl,.sum .total{display:none}
+  .mini{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:.92rem}
+  .mini span{color:var(--mute);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mini b{font:700 1.3rem var(--serif);color:var(--brass2);flex:none}
+  .cta{margin-top:10px;min-height:52px;font-size:1.05rem}
+  .done{margin:10px 0;padding:28px 18px}
+  .done a,.done button{display:block;margin:10px 0;min-height:52px;line-height:28px}
+  .row{flex-direction:column;align-items:stretch}
+  .row button{min-height:44px}
+  footer{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+@media(max-width:360px){.times{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <span class="badge">VIP randevu</span>
+  <h1>Koltuğunuz hazır. Saatinizi seçin.</h1>
+  <p>Hizmeti, ustayı ve saati kendiniz belirleyin. Randevunuz anında onaylanır, sırada beklemezsiniz.</p>
+</div></header>
+<div class="wrap"><main id="app"></main></div>
+<footer><div class="wrap"><button class="link" id="adminBtn">Yönetim</button></div></footer>
+
+<script>
+/* ===== AYARLAR: burayı kendinize göre düzenleyin ===== */
+const CONFIG={
+  whatsapp:"",            // örn: "905551234567" (boş bırakırsanız WhatsApp düğmesi çıkmaz)
+  open:10*60, close:21*60, // 10:00 - 21:00
+  closedDays:[0],         // 0 = Pazar kapalı
+  daysAhead:14,
+  adminPin:"1234"
+};
+const SERVICES=[
+  {id:"s1",name:"Saç kesimi",min:45,price:500,note:"Yıkama ve şekillendirme dahil"},
+  {id:"s2",name:"Sakal tıraşı",min:30,price:300,note:"Sıcak havlu ve ustura"},
+  {id:"s3",name:"Saç + sakal",min:75,price:750,note:"Tam bakım"},
+  {id:"s4",name:"VIP bakım",min:120,price:1400,note:"Saç, sakal, cilt bakımı, ikram"}
+];
+const BARBERS=["Usta 1","Usta 2","Usta 3"];
+/* ===================================================== */
+
+const KEY="vip_randevular";
+const $=s=>document.querySelector(s), app=$("#app");
+const gun=["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
+const ay=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"];
+const tl=n=>n.toLocaleString("tr-TR")+" ₺";
+const hm=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let mem=[];
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return mem}}
+function save(a){mem=a;try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+
+let S={svc:null,barber:"any",date:null,time:null,name:"",phone:"",done:null,admin:false};
+
+function freeBarbers(date,start,dur){
+  const all=load().filter(a=>a.date===date);
+  return BARBERS.filter(b=>!all.some(a=>a.barber===b&&start<a.start+a.dur&&a.start<start+dur));
+}
+function slotOk(date,start,dur){
+  if(start+dur>CONFIG.close) return false;
+  const now=new Date();
+  if(date===iso(now)&&start<now.getHours()*60+now.getMinutes()+30) return false;
+  const f=freeBarbers(date,start,dur);
+  return S.barber==="any"?f.length>0:f.includes(S.barber);
+}
+function days(){
+  const out=[],t=new Date();t.setHours(0,0,0,0);
+  for(let i=0;i<CONFIG.daysAhead;i++){const d=new Date(t);d.setDate(t.getDate()+i);out.push(d)}
+  return out;
+}
+
+function render(){
+  if(S.admin) return renderAdmin();
+  if(S.done) return renderDone();
+  const svc=SERVICES.find(s=>s.id===S.svc);
+  let h=`<div>
+  <section class="step"><h2><b>1</b>Hizmet</h2><div class="opts">${SERVICES.map(s=>`
+    <button class="opt" data-svc="${s.id}" aria-pressed="${S.svc===s.id}"><span class="pr">${tl(s.price)}</span><strong>${s.name}</strong><small>${s.min} dk · ${s.note}</small></button>`).join("")}</div></section>
+  <section class="step"><h2><b>2</b>Usta</h2><div class="opts">
+    <button class="opt" data-b="any" aria-pressed="${S.barber==="any"}"><strong>Fark etmez</strong><small>En erken uygun usta atanır</small></button>
+    ${BARBERS.map(b=>`<button class="opt" data-b="${b}" aria-pressed="${S.barber===b}"><strong>${b}</strong></button>`).join("")}</div></section>
+  <section class="step"><h2><b>3</b>Gün ve saat</h2>
+    <div class="days">${days().map(d=>{const k=iso(d),off=CONFIG.closedDays.includes(d.getDay());
+      return `<button class="day" data-d="${k}" ${off?"disabled":""} aria-pressed="${S.date===k}"><span>${gun[d.getDay()]}</span><em>${d.getDate()}</em><span>${ay[d.getMonth()]}</span></button>`}).join("")}</div>
+    ${!svc?`<p class="hint">Saatleri görmek için önce bir hizmet seçin.</p>`:!S.date?`<p class="hint">Bir gün seçin.</p>`:`<div class="times">${timeBtns(svc)}</div>`}
+  </section>
+  <section class="step" style="border:0"><h2><b>4</b>Bilgileriniz</h2>
+    <label>Ad soyad<input id="nm" autocomplete="name" value="${esc(S.name)}"></label>
+    <label>Telefon<input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx" value="${esc(S.phone)}"></label>
+  </section></div>
+  <aside class="sum"><div class="mini"><span>${svc?svc.name+(S.date?" · "+fmtDate(S.date):"")+(S.time!=null?" · "+hm(S.time):""):"Bir hizmet seçerek başlayın"}</span><b>${svc?tl(svc.price):""}</b></div><h3>Randevu özeti</h3><dl>
+    <dt>Hizmet</dt><dd>${svc?svc.name:"–"}</dd>
+    <dt>Usta</dt><dd>${S.barber==="any"?"Fark etmez":S.barber}</dd>
+    <dt>Tarih</dt><dd>${S.date?fmtDate(S.date):"–"}</dd>
+    <dt>Saat</dt><dd>${S.time!=null&&svc?hm(S.time)+" – "+hm(S.time+svc.min):"–"}</dd></dl>
+    <div class="total"><span>Toplam</span><b>${svc?tl(svc.price):"–"}</b></div>
+    <button class="cta" id="ok" disabled>Randevuyu onayla</button></aside>`;
+  const y=window.scrollY; app.innerHTML=h; window.scrollTo(0,y);
+  bind(svc);
+}
+function timeBtns(svc){
+  let o="";
+  for(let m=CONFIG.open;m+svc.min<=CONFIG.close;m+=30){
+    const ok=slotOk(S.date,m,svc.min);
+    o+=`<button class="t" data-t="${m}" ${ok?"":"disabled"} aria-pressed="${S.time===m}">${hm(m)}</button>`;
+  }
+  return o;
+}
+function fmtDate(k){const [y,m,d]=k.split("-").map(Number),dt=new Date(y,m-1,d);return d+" "+ay[m-1]+" "+gun[dt.getDay()]}
+function valid(){return S.svc&&S.date&&S.time!=null&&S.name.trim().length>=3&&S.phone.replace(/\D/g,"").length>=10}
+function bind(svc){
+  app.querySelectorAll("[data-svc]").forEach(b=>b.onclick=()=>{S.svc=b.dataset.svc;S.time=null;render()});
+  app.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{S.barber=b.dataset.b;S.time=null;render()});
+  app.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{S.date=b.dataset.d;S.time=null;render()});
+  app.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{S.time=+b.dataset.t;render()});
+  const ok=$("#ok");
+  const upd=()=>{S.name=$("#nm").value;S.phone=$("#ph").value;ok.disabled=!valid()};
+  $("#nm").oninput=upd;$("#ph").oninput=upd;upd();
+  ok.onclick=()=>{
+    upd(); if(!valid()) return;
+    const f=freeBarbers(S.date,S.time,svc.min);
+    const b=S.barber==="any"?f[0]:(f.includes(S.barber)?S.barber:null);
+    if(!b){alert("Bu saat az önce doldu. Lütfen başka bir saat seçin.");S.time=null;return render()}
+    const a={id:Date.now(),svc:svc.name,price:svc.price,barber:b,date:S.date,start:S.time,dur:svc.min,name:S.name.trim(),phone:S.phone.trim()};
+    save(load().concat(a)); S.done=a; render(); window.scrollTo(0,0);
+  };
+}
+function renderDone(){
+  const a=S.done;
+  const msg=encodeURIComponent(`Merhaba, randevu aldım: ${a.svc}, ${fmtDate(a.date)} ${hm(a.start)}, ${a.barber}. Ad: ${a.name}`);
+  app.innerHTML=`<div class="done"><h2>Randevunuz onaylandı</h2><p>Sizi bekliyoruz, ${esc(a.name.split(" ")[0])}.</p>
+  <div class="det"><b>${a.svc}</b><br>${fmtDate(a.date)} · ${hm(a.start)} – ${hm(a.start+a.dur)}<br>${a.barber} · ${tl(a.price)}</div>
+  ${CONFIG.whatsapp?`<a href="https://wa.me/${CONFIG.whatsapp}?text=${msg}" target="_blank" rel="noopener">WhatsApp ile bildir</a>`:""}
+  <button id="again">Yeni randevu al</button></div>`;
+  $("#again").onclick=()=>{S={svc:null,barber:"any",date:null,time:null,name:"",phone:"",done:null,admin:false};render()};
+}
+function renderAdmin(){
+  const list=load().sort((a,b)=>(a.date+String(a.start).padStart(4,"0")).localeCompare(b.date+String(b.start).padStart(4,"0")));
+  app.innerHTML=`<div class="admin"><h2>Tüm randevular (${list.length})</h2>
+  ${list.length?list.map(a=>`<div class="row"><div><strong>${fmtDate(a.date)} · ${hm(a.start)}</strong> – ${esc(a.name)}<br><small>${esc(a.svc)} · ${esc(a.barber)} · ${esc(a.phone)}</small></div><button data-del="${a.id}">İptal et</button></div>`).join(""):`<p class="hint">Henüz randevu yok. Müşteriler randevu aldıkça burada görünür.</p>`}
+  <button class="link" id="back">Randevu sayfasına dön</button></div>`;
+  app.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(confirm("Bu randevu iptal edilsin mi?")){save(load().filter(a=>String(a.id)!==b.dataset.del));renderAdmin()}});
+  $("#back").onclick=()=>{S.admin=false;render()};
+}
+$("#adminBtn").onclick=()=>{const p=prompt("Yönetim şifresi");if(p===CONFIG.adminPin){S.admin=true;S.done=null;render();window.scrollTo(0,0)}else if(p!==null)alert("Şifre yanlış.")};
+render();
+</script>
+</body>
+</html>
